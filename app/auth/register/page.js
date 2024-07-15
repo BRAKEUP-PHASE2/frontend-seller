@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function SellerRegisterPage() {
   const [currentPage, setCurrentPage] = useState("phone"); // Phone Page: "phone", OTP Page: "otp"
   const [isVerified, setIsVerified] = useState(false);
+  const router = useRouter();
 
   function handlePhoneNumberSubmit(data) {
     console.log(data);
@@ -20,6 +22,8 @@ export default function SellerRegisterPage() {
 
   function handleEmailSubmit(data) {
     console.log("data ", data);
+    setCurrentPage((prev) => "profile");
+    router.replace("/auth/profile");
   }
 
   return (
@@ -37,6 +41,9 @@ export default function SellerRegisterPage() {
           onEmailSubmit={handleEmailSubmit}
         />
       )}
+      {/* {currentPage === "profile" && (
+
+      )} */}
       <p className="text-center text-xs text-gray-500 mt-3">
         {`Already have an account `}
         <Link
@@ -105,7 +112,11 @@ function OtpVerificationPage({ onSubmit, isVerified, onEmailSubmit }) {
           <label htmlFor="" className="text-gray-500">
             OTP
           </label>
-          <button disabled={isVerified} type="button" className="text-brand-primary">
+          <button
+            disabled={isVerified}
+            type="button"
+            className="text-brand-primary"
+          >
             Resend OTP
           </button>
         </div>
@@ -134,13 +145,13 @@ function OtpVerificationPage({ onSubmit, isVerified, onEmailSubmit }) {
           onSubmit={handleEmailSubmit(onEmailSubmit)}
           className="flex flex-col items-center"
         >
-          <div className="w-full flex flex-col mb-3">
+          <div className="w-full flex flex-col mb-4">
             <label htmlFor="email" className="text-xs">
               Enter Email
             </label>
             <input
               type="email"
-              className="border border-gray-500 py-2 px-2 text-sm placeholder:text-xs rounded-md outline-none"
+              className="border border-gray-500 py-2 px-2 text-sm placeholder:text-xs rounded-md outline-none mt-2"
               placeholder="jane@example.com"
               {...registerEmail("email", { required: true })}
             />
@@ -151,7 +162,7 @@ function OtpVerificationPage({ onSubmit, isVerified, onEmailSubmit }) {
             </label>
             <input
               type="password"
-              className="border border-gray-500 py-2 px-2 text-sm rounded-md outline-none placeholder:font-bold placeholder:text-2xl placeholder:absolute relative placeholder:-top-1"
+              className="border border-gray-500 py-2 px-2 text-sm rounded-md outline-none placeholder:font-bold placeholder:text-2xl placeholder:absolute relative placeholder:-top-1 mt-2"
               placeholder=".........."
               {...registerEmail("password", {
                 required: true,
