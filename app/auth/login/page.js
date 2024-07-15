@@ -77,9 +77,9 @@ export default function LoginPage() {
             <div className="text-xs text-gray-500">Remember Password</div>
           </div>
         </div>
-        <button className="text-sm text-white bg-blue-500 w-4/5 py-2 rounded-md">Sign In</button>
+        <button className="text-white bg-brand-primary text-xs w-4/5 py-3 rounded-md">Sign In</button>
       </form>
-      <p className="text-center text-xs text-gray-500">{`Join us! Ready to sell? `}<Link className="text-blue-500 underline underline-offset-2 font-medium" href="/auth/signup">{`Create Account`}</Link></p>
+      <p className="text-center text-xs text-gray-500">{`Join us! Ready to sell? `}<Link className="text-blue-500 underline underline-offset-2 font-medium" href="/auth/register">{`Create Account`}</Link></p>
     </div>
   );
 }
