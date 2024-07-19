@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function AuthLayout({ children }) {
   return (
-    <div className="flex items-center justify-center w-full h-lvh relative bg-white">
+    <div className="flex items-center justify-center w-full min-h-lvh relative bg-white py-4">
       <div className="z-10 flex flex-col justify-between items-center gap-10">
         <>{children}</>
         <Image src="/logo/logo.png" width={150} height={200} alt="Logo" />
