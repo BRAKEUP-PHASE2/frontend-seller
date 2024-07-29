@@ -27,24 +27,8 @@ export default function HomeLayout({ children }) {
               href="/home/orders"
               className="min-w-44 text-xs hover:bg-gray-200 transition-colors py-2 px-3 rounded-md"
             >
-              <GoPackage size={15} className="inline-block mr-2" /> Products
-            </Link>
-          </li>
-          <li className="flex items-center justify-center py-2">
-            <Link
-              href="/home/orders"
-              className="min-w-44 text-xs hover:bg-gray-200 transition-colors py-2 px-3 rounded-md"
-            >
               <GoListUnordered size={15} className="inline-block mr-2" /> Order
               Lists
-            </Link>
-          </li>
-          <li className="flex items-center justify-center py-2">
-            <Link
-              href="/home/stocks"
-              className="min-w-44 text-xs hover:bg-gray-200 transition-colors py-2 px-3 rounded-md"
-            >
-              <GoStack size={15} className="inline-block mr-2" /> Product Stock
             </Link>
           </li>
         </ul>
