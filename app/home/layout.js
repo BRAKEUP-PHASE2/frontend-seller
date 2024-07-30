@@ -4,8 +4,8 @@ import { GoHome, GoListUnordered, GoPackage, GoStack, GoSignOut, GoFile } from "
 
 export default function HomeLayout({ children }) {
   return (
-    <div className="flex h-lvh max-h-lvh w-full">
-      <div className="w-72 ">
+    <div className="flex min-h-lvh w-full">
+      <div className="w-64 fixed bg-white h-lvh">
         <Image
           src="/logo/logo.png"
           className="my-4 mx-auto"
@@ -33,7 +33,7 @@ export default function HomeLayout({ children }) {
           </li>
         </ul>
         <div className="w-full border-b py-5">
-          <h4 className="uppercase font-medium text-gray-400 text-xs mb-3 relative left-8">Pages</h4>
+          <h4 className="uppercase font-medium text-gray-400 text-xs mb-3 relative left-8">Tools</h4>
           <ul>
             <li className="flex items-center justify-center py-2">
               <Link
@@ -51,7 +51,7 @@ export default function HomeLayout({ children }) {
           </ul>
         </div>
       </div>
-      <div className="w-full bg-gray-100">{children}</div>
+      <div className="ml-64 w-full bg-gray-100">{children}</div>
     </div>
   );
 }
