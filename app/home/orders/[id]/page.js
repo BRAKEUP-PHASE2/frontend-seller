@@ -1,9 +1,42 @@
 "use client";
-import { GoChevronDown, GoClock, GoDownload, GoPackage } from "react-icons/go";
+import {
+  GoChevronDown,
+  GoClock,
+  GoDownload,
+  GoLocation,
+  GoPackage,
+  GoPerson,
+} from "react-icons/go";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
 
 export default function OrderPage({ params }) {
+  const timelineData = [
+    {
+      title: "Order Received",
+      time: "July 8, at 3:30 pm",
+    },
+    {
+      title: "Order Validated",
+      time: "July 8, at 3:30 pm",
+    },
+    {
+      title: "Invoice Generated",
+      time: "July 8, at 3:30 pm",
+    },
+    {
+      title: "Label Generated",
+      time: "July 8, at 3:30 pm",
+    },
+    {
+      title: "Pickup Scheduled",
+      time: "July 8, at 3:30 pm",
+    },
+    {
+      title: "Order Picked Up",
+      time: "July 8, at 3:30 pm",
+    },
+  ];
   return (
     <div className="py-5 px-5">
       <div className="flex justify-between items-start mb-10">
@@ -52,7 +85,7 @@ export default function OrderPage({ params }) {
         </div>
       </div>
       <div className="grid grid-cols-3 gap-5">
-        <div className="col-span-2">
+        <div className="col-span-2 flex flex-col gap-5">
           <div className="w-full rounded-md border border-gray-300 bg-white overflow-hidden">
             <div className="py-4 px-4">
               <div className="mb-5 flex justify-between items-start">
@@ -160,26 +193,246 @@ export default function OrderPage({ params }) {
               </div>
               <form className="flex gap-2 items-end">
                 <div className="flex flex-col">
-                  <label htmlFor="part_no" className="text-xs font-medium text-gray-500">Part no</label>
+                  <label
+                    htmlFor="part_no"
+                    className="text-xs font-medium text-gray-500"
+                  >
+                    Part no
+                  </label>
                   <input
                     defaultValue={`123456-abcd`}
                     className="text-xs py-2 outline-none px-2 mt-1 rounded-md border border-gray-300"
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label htmlFor="part_no" className="text-xs font-medium text-gray-500">Stock</label>
+                  <label
+                    htmlFor="part_no"
+                    className="text-xs font-medium text-gray-500"
+                  >
+                    Stock
+                  </label>
+                  <input className="text-xs py-2 outline-none px-2 mt-1 rounded-md border border-gray-300" />
+                </div>
+                <button className="text-xs bg-brand-primary py-2 text-white px-4 rounded-md">
+                  Confirm
+                </button>
+                <button className="text-xs border border-gray-300 py-2 text-brand-primary px-4 rounded-md bg-white">
+                  Change
+                </button>
+              </form>
+            </div>
+          </div>
+          <div className="w-full rounded-md border border-gray-300 bg-white overflow-hidden">
+            <div className="py-4 px-4">
+              <div className="mb-5 flex justify-between items-start">
+                <div>
+                  <h4 className="text-base font-semibold text-gray-600">
+                    Order Item
+                  </h4>
+                  <div className="text-xs text-gray-400">Item 2 of 2</div>
+                </div>
+                <div className="text-xs flex flex-col items-end">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div>
+                      <span className="text-gray-500">Quantity: </span>
+                      <span>3</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-500">Unit Price: </span>
+                      <span>{`\u20B9 5,000`}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Total: </span>
+                    <span>{`\u20B9 15,000`}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex gap-2 items-start">
+                <div className="relative rounded-md w-24 h-24 min-w-24 mr-4">
+                  <Image
+                    src="/images/product_1.png"
+                    fill={true}
+                    objectFit="cover"
+                    alt="Product"
+                  />
+                </div>
+                <div className="w-full">
+                  <div className="border-b border-gray-300 pb-5">
+                    <h6 className="text-xs mb-5 text-gray-400">
+                      Product Details
+                    </h6>
+                    <div className="grid grid-cols-3 gap-4">
+                      <div className="text-xs">
+                        <div className="text-gray-500 mb-1">Category</div>
+                        <div className="font-medium">Brake System</div>
+                      </div>
+                      <div className="text-xs">
+                        <div className="text-gray-500 mb-1">Sub Category</div>
+                        <div className="font-medium">Brake Pads</div>
+                      </div>
+                      <div className="text-xs">
+                        <div className="text-gray-500 mb-1">Category</div>
+                        <div className="font-medium">Brake System</div>
+                      </div>
+                      <div className="text-xs">
+                        <div className="text-gray-500 mb-1">Brand</div>
+                        <div className="font-medium">Brembo</div>
+                      </div>
+                      <div className="text-xs">
+                        <div className="text-gray-500 mb-1">Axle</div>
+                        <div className="font-medium">Front</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className=" py-5">
+                    <h6 className="text-xs mb-5 text-gray-400">
+                      Vehicle Details
+                    </h6>
+                    <div className="grid grid-cols-3 gap-4">
+                      <div className="text-xs">
+                        <div className="text-gray-500 mb-1">Make</div>
+                        <div className="font-medium">Maruti Suzuki</div>
+                      </div>
+                      <div className="text-xs">
+                        <div className="text-gray-500 mb-1">Model</div>
+                        <div className="font-medium">Swift</div>
+                      </div>
+                      <div className="text-xs">
+                        <div className="text-gray-500 mb-1">Year</div>
+                        <div className="font-medium">2018</div>
+                      </div>
+                      <div className="text-xs">
+                        <div className="text-gray-500 mb-1">Variant</div>
+                        <div className="font-medium">Vdi</div>
+                      </div>
+                      <div className="text-xs">
+                        <div className="text-gray-500 mb-1">
+                          Registration No.
+                        </div>
+                        <div className="font-medium">ABCDE12345F</div>
+                      </div>
+                      <div className="text-xs">
+                        <div className="text-gray-500 mb-1">VIN No.</div>
+                        <div className="font-medium text-gray-400">
+                          Unavailable
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="py-4 px-4 w-full border-t border-gray-300 bg-slate-100">
+              <div className="text-xs text-gray-500 font-medium mb-4">
+                Confirm Part no. and Stock for product
+              </div>
+              <form className="flex gap-2 items-end">
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="part_no"
+                    className="text-xs font-medium text-gray-500"
+                  >
+                    Part no
+                  </label>
                   <input
+                    defaultValue={`123456-abcd`}
                     className="text-xs py-2 outline-none px-2 mt-1 rounded-md border border-gray-300"
                   />
                 </div>
-                <button className="text-xs bg-brand-primary py-2 text-white px-4 rounded-md">Confirm</button>
-                <button className="text-xs border border-gray-300 py-2 text-brand-primary px-4 rounded-md bg-white">Change</button>
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="part_no"
+                    className="text-xs font-medium text-gray-500"
+                  >
+                    Stock
+                  </label>
+                  <input className="text-xs py-2 outline-none px-2 mt-1 rounded-md border border-gray-300" />
+                </div>
+                <button className="text-xs bg-brand-primary py-2 text-white px-4 rounded-md">
+                  Confirm
+                </button>
+                <button className="text-xs border border-gray-300 py-2 text-brand-primary px-4 rounded-md bg-white">
+                  Change
+                </button>
               </form>
             </div>
           </div>
         </div>
-        <div className="col-span-1">
-          <div className="w-full rounded-md border border-gray-300"></div>
+        <div className="col-span-1 flex flex-col gap-5">
+          <div className="w-full rounded-md py-3 px-3 bg-white">
+            <h4 className="text-sm font-semibold mb-5">Customer Details</h4>
+            <div className="text-xs mb-3">
+              <div className="text-gray-400">Name</div>
+              <div className="font-medium">Jane Doe</div>
+            </div>
+            <div className="text-xs mb-3">
+              <div className="text-gray-400">Address</div>
+              <div className="font-medium">
+                Apt. 582 61232 Schuppe Falls, Hanemouth, MS 69102
+              </div>
+            </div>
+            <div className="text-xs mb-3">
+              <div className="text-gray-400">New Customer</div>
+              <div className="font-medium">No </div>
+            </div>
+            <div className="text-xs mb-3">
+              <div className="text-gray-400">Payment Mode</div>
+              <div className="font-medium">Cash on Delivery</div>
+            </div>
+          </div>
+          <div className="w-full rounded-md py-3 px-3 bg-white">
+            <h4 className="text-sm font-semibold mb-5">Logistics</h4>
+            <div className="pb-3 border-b border-gray-300">
+              <div className="text-xs text-gray-400 mb-2">Box 1 of 1</div>
+              <div className="grid grid-cols-2 mb-4">
+                <div className="text-xs mb-3">
+                  <div className="text-gray-400">{`Length (cm)`}</div>
+                  <div className="font-medium">100</div>
+                </div>
+                <div className="text-xs mb-3">
+                  <div className="text-gray-400">{`Breadth (cm)`}</div>
+                  <div className="font-medium">100</div>
+                </div>
+                <div className="text-xs mb-3">
+                  <div className="text-gray-400">{`Height (cm)`}</div>
+                  <div className="font-medium">100</div>
+                </div>
+                <div className="text-xs mb-3">
+                  <div className="text-gray-400">{`Weight (cm)`}</div>
+                  <div className="font-medium">100</div>
+                </div>
+                <div className="text-xs mb-3">
+                  <div className="text-gray-400">Shipped by</div>
+                  <div className="font-medium">Delhivery Logistics</div>
+                </div>
+              </div>
+              <div className="text-xs">
+                <div className="mb-2 flex gap-2 items-center">
+                  <div className="text-gray-400">Tracking ID</div>
+                  <div className="font-medium">123456789ABCDE</div>
+                </div>
+                <button className="w-full rounded-md bg-brand-primary py-2 text-white">
+                  Track Shipment
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="w-full rounded-md py-3 px-3 bg-white">
+            <h4 className="text-sm font-semibold mb-5">Status</h4>
+            {timelineData.map((item, index) => (
+              <div className="w-full flex items-start text-xs gap-3 h-11 group">
+                <div className="relative w-2 h-9">
+                  <div className="w-2 h-2 rounded-full bg-green-500 z-10 group-last:animate-pulse" />
+                  <div className="w-px h-full bg-gray-300 absolute left-1/2 -translate-x-1/2 group-last:hidden" />
+                </div>
+                <div>
+                  <div className="font-medium">{item.title}</div>
+                  <div className="text-gray-400">{item.time}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

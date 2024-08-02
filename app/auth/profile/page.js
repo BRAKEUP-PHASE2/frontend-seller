@@ -16,10 +16,14 @@ import {
 import { GoCheck, GoChevronDown, GoX } from "react-icons/go";
 
 export default function ProfilePage() {
-  const [pageToShow, setPageToShow] = useState("pickup"); // 1. base, 2. details, 3. gst 4. pickup
+  const [pageToShow, setPageToShow] = useState("details"); // 1. base, 2. details, 3. gst 4. pickup
 
   function handleSellerDetailsSubmit(data) {
     console.log(data);
+  }
+
+  function handleContinueClick() {
+    setPageToShow((prev) => "details");
   }
 
   switch (pageToShow) {
@@ -52,7 +56,10 @@ export default function ProfilePage() {
         />
       </div>
       <div className="flex flex-col items-center">
-        <button className="text-xs font-medium text-white bg-brand-primary w-4/5 py-3 rounded-md mb-7">
+        <button
+          onClick={handleContinueClick}
+          className="text-xs font-medium text-white bg-brand-primary w-4/5 py-3 rounded-md mb-7"
+        >
           Complete Your Profile
         </button>
         <button className="text-xs font-medium text-brand-primary border border-brand-primary w-4/5 py-3 rounded-md">
@@ -64,46 +71,65 @@ export default function ProfilePage() {
 }
 
 function SellerDetailsPage({ onSubmit }) {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const fileInputRef = useRef(null);
 
   function handleFileInputClick() {
     fileInputRef.current.click();
   }
+
+  function onSubmitForm(data) {
+    onSubmit({ ...data, company_logo: fileInputRef.current.files[0] });
+  }
+
+
+
   return (
     <div className="max-w-5xl max-h-dvh bg-white rounded-lg py-6 px-10">
       <h2 className="font-semibold text-lg text-center mb-10">
         Create Your Profile
       </h2>
       <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex items-start gap-5"
+        onSubmit={handleSubmit(onSubmitForm)}
+        className="flex items-start gap-10"
       >
         <div className="flex flex-col items-center min-w-fit">
-          <div className="text-black rounded-full bg-gray-300 w-14 h-14 flex items-center justify-center">
+          <div className="text-black rounded-full bg-gray-300 w-14 h-14 flex items-center justify-center relative">
             <FaCamera />
           </div>
-          <div className="relative">
+          <div className="relative flex flex-col items-center mt-2">
             <input
-              ref={fileInputRef}
               placeholder=""
               type="file"
               className="hidden"
+              {...register("company_logo")}
+              ref={(e) => {
+                // ref(e)
+                fileInputRef.current = e;
+              }}
               accept="image/png, image/jpg, image/jpeg"
             />
-            <button
-              type="button"
-              onClick={handleFileInputClick}
-              className="text-xs text-brand-primary font-medium"
-            >
-              Upload Photo
-            </button>
+            {fileInputRef.current === null ? (
+              <button
+                type="button"
+                onClick={handleFileInputClick}
+                className="text-xs text-brand-primary font-medium"
+              >
+                Upload Photo
+              </button>
+            ) : (
+              <p className="text-xs text-green-500">Uploaded</p>
+            )}
           </div>
         </div>
         <div className="grid grid-cols-2 gap-5">
           <div className="flex flex-col">
             <label className="text-xs text-gray-500" htmlFor="company_name">
-              Company Name
+              Company Name*
             </label>
             <input
               {...register("company_name", { required: true })}
@@ -113,7 +139,7 @@ function SellerDetailsPage({ onSubmit }) {
           </div>
           <div className="flex flex-col">
             <label className="text-xs text-gray-500" htmlFor="company_name">
-              Registered Address
+              Registered Address*
             </label>
             <input
               {...register("address_line_1", { required: true })}
@@ -136,7 +162,7 @@ function SellerDetailsPage({ onSubmit }) {
               Registered Address
             </label>
             <input
-              {...register("address_line_2", { required: true })}
+              {...register("address_line_2")}
               className="text-sm border rounded-md py-2 px-2 outline-none focus:border-black mt-2 min-w-56 placeholder:text-xs"
               placeholder="Address Line 2"
             />
@@ -146,17 +172,18 @@ function SellerDetailsPage({ onSubmit }) {
               Phone Number
             </label>
             <input
-              {...register("phone_number", { required: true })}
+              {...register("mobile", { required: true, minLength: 10, maxLength: 10, pattern: /^[0-9]+$/ })}
               className="text-sm border rounded-md py-2 px-2 outline-none focus:border-black mt-2 min-w-56 placeholder:text-xs"
               placeholder="000-000-0000"
             />
+            {errors.mobile?.type === "minLength" || errors.mobile?.type === "maxLength" && <p className="text-xs text-red-500">Enter a valid phone number</p>}
           </div>
           <div className="flex flex-col">
             <label className="text-xs text-gray-500" htmlFor="company_name">
               PIN Code
             </label>
             <input
-              {...register("pin_code", { required: true })}
+              {...register("pincode", { required: true })}
               className="text-sm border rounded-md py-2 px-2 outline-none focus:border-black mt-2 min-w-56 placeholder:text-xs"
               placeholder="000-000"
             />
@@ -166,7 +193,7 @@ function SellerDetailsPage({ onSubmit }) {
               Authorised Person
             </label>
             <input
-              {...register("pin_code", { required: true })}
+              {...register("authorized_person", { required: true })}
               className="text-sm border rounded-md py-2 px-2 outline-none focus:border-black mt-2 min-w-56 placeholder:text-xs"
               placeholder="Person to contact"
             />
@@ -176,19 +203,9 @@ function SellerDetailsPage({ onSubmit }) {
               City
             </label>
             <input
-              {...register("pin_code", { required: true })}
+              {...register("city", { required: true })}
               className="text-sm border rounded-md py-2 px-2 outline-none focus:border-black mt-2 min-w-56 placeholder:text-xs"
               placeholder="Select a city"
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="text-xs text-gray-500" htmlFor="company_name">
-              Brands
-            </label>
-            <input
-              {...register("pin_code", { required: true })}
-              className="text-sm border rounded-md py-2 px-2 outline-none focus:border-black mt-2 min-w-56 placeholder:text-xs"
-              placeholder="Select Brands"
             />
           </div>
           <div className="flex flex-col">
@@ -196,14 +213,16 @@ function SellerDetailsPage({ onSubmit }) {
               State
             </label>
             <input
-              {...register("pin_code", { required: true })}
+              {...register("state", { required: true })}
               className="text-sm border rounded-md py-2 px-2 outline-none focus:border-black mt-2 min-w-56 placeholder:text-xs"
               placeholder="Select State"
             />
           </div>
-          <div />
-          <div className="">
-            <button className="text-sm bg-brand-primary py-2 px-3 rounded-md text-white w-full">
+          <div className="mt-6">
+            <button
+              className="text-sm bg-brand-primary py-2 px-3 rounded-md text-white w-full"
+              type="submit"
+            >
               Next 1/3
             </button>
           </div>
@@ -365,7 +384,7 @@ function AddPickupAddressPage({ onSubmit }) {
   const [openDialog, setOpenDialog] = useState(false);
 
   function AddAddresses(data) {
-    setAddresses((prev) => [...prev, data])
+    setAddresses((prev) => [...prev, data]);
   }
 
   return (
@@ -382,7 +401,9 @@ function AddPickupAddressPage({ onSubmit }) {
               <GoX />
             </button>
           </div>
-          <h3 className="text-lg font-semibold text-center">Add Pickup Address</h3>
+          <h3 className="text-lg font-semibold text-center">
+            Add Pickup Address
+          </h3>
           <div className="flex items-center gap-2 px-5">
             <Checkbox className="group flex items-center justify-center size-4 rounded border border-gray-400 text-gray-400">
               <GoCheck className="group-data-[checked]:opacity-100 opacity-0" />
@@ -490,9 +511,7 @@ function AddPickupAddressPage({ onSubmit }) {
             </tr>
             {addresses?.map((address, index) => (
               <tr key={index} className="">
-                <td className="text-center text-xs px-3 py-2">
-                  {index + 1}
-                </td>
+                <td className="text-center text-xs px-3 py-2">{index + 1}</td>
                 <td className="overflow-hidden text-ellipsis max-w-48 text-nowrap text-xs capitalize px-3 py-2">
                   {address.address_line_1}
                 </td>
@@ -509,7 +528,9 @@ function AddPickupAddressPage({ onSubmit }) {
                   {address.pin_code}
                 </td>
                 <td className="capitalize px-3 py-2 text-center">
-                  <button className="bg-slate-200 text-brand-primary font-medium text-xs py-1 px-3 rounded-md">Edit</button>
+                  <button className="bg-slate-200 text-brand-primary font-medium text-xs py-1 px-3 rounded-md">
+                    Edit
+                  </button>
                 </td>
               </tr>
             ))}

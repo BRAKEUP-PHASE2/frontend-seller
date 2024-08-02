@@ -4,15 +4,24 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { axiosInstance } from "@/app/(utils)/helpers";
 
 export default function SellerRegisterPage() {
   const [currentPage, setCurrentPage] = useState("phone"); // Phone Page: "phone", OTP Page: "otp"
   const [isVerified, setIsVerified] = useState(false);
   const router = useRouter();
 
-  function handlePhoneNumberSubmit(data) {
-    console.log(data);
-    setCurrentPage((prev) => "otp");
+  async function handlePhoneNumberSubmit(data) {
+    try {
+      const res = await axiosInstance.post(
+        "/user/mobile_register/",
+        data
+      )
+      console.log('response', res.response);
+    } catch (error) {
+      console.log('error', error.response.status)
+    }
+    // setCurrentPage((prev) => "otp");
   }
 
   function handleOTPSubmit(data) {
@@ -41,9 +50,6 @@ export default function SellerRegisterPage() {
           onEmailSubmit={handleEmailSubmit}
         />
       )}
-      {/* {currentPage === "profile" && (
-
-      )} */}
       <p className="text-center text-xs text-gray-500 mt-3">
         {`Already have an account `}
         <Link
@@ -72,7 +78,7 @@ function PhoneInputPage({ onSubmit }) {
           <div className="flex items-center gap-2 border border-gray-400 rounded-md py-2 px-2 mt-2">
             <div className="text-sm text-gray-400">+91</div>
             <input
-              {...register("phone", { required: true })}
+              {...register("mobile", { required: true })}
               placeholder="000 000 0000"
               className="text-sm outline-none placeholder:text-xs"
             />
