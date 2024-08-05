@@ -1,8 +1,20 @@
+'use client'
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { GoHome, GoListUnordered, GoPackage, GoStack, GoSignOut, GoFile } from "react-icons/go";
 
 export default function HomeLayout({ children }) {
+  const pathname = usePathname();
+
+  const isActive = (path) => pathname === path;
+
+  const linkClass = (path) =>
+    `min-w-44 text-xs transition-colors py-2 px-3 rounded-md ${
+      isActive(path) ? "bg-brand-primary text-white" : "hover:bg-gray-200"
+    }`;
+
   return (
     <div className="flex min-h-lvh w-full">
       <div className="w-64 fixed bg-white h-lvh">
@@ -17,7 +29,7 @@ export default function HomeLayout({ children }) {
           <li className="flex items-center justify-center py-2">
             <Link
               href="/home/dashboard"
-              className="min-w-44 text-xs hover:bg-gray-200 transition-colors py-2 px-3 rounded-md"
+              className={linkClass("/home/dashboard")}
             >
               <GoHome size={15} className="inline-block mr-2" /> Dashboard
             </Link>
@@ -25,7 +37,7 @@ export default function HomeLayout({ children }) {
           <li className="flex items-center justify-center py-2">
             <Link
               href="/home/orders"
-              className="min-w-44 text-xs hover:bg-gray-200 transition-colors py-2 px-3 rounded-md"
+              className={linkClass("/home/orders")}
             >
               <GoListUnordered size={15} className="inline-block mr-2" /> Order
               Lists
@@ -38,7 +50,7 @@ export default function HomeLayout({ children }) {
             <li className="flex items-center justify-center py-2">
               <Link
                 href="/home/accounts"
-                className="min-w-44 text-xs hover:bg-gray-200 transition-colors py-2 px-3 rounded-md"
+                className={linkClass("/home/accounts")}
               >
                 <GoFile size={15} className="inline-block mr-2" /> Accounts
               </Link>

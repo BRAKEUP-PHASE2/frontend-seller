@@ -9,7 +9,7 @@ export const axiosInstance = axios.create({
 
 export const baseURL = "https://api.dev.brakeup.in/api/v2";
 
-export const statesData = [
+export const StatesData = [
   {
     S_No: 1,
     COUNTRY_CODE: "IN",
